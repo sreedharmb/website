@@ -163,16 +163,22 @@ export const education = {
 
 // Articles published elsewhere (LinkedIn, Medium, ...). They appear in the
 // Writing list alongside local posts and link out to the original.
-// date format: YYYY-MM-DD
+// date format: YYYY-MM-DD (optional; undated articles are listed last)
 export type ExternalArticle = {
   title: string;
-  date: string;
+  date?: string;
   url: string;
   source: string;
   description?: string;
 };
 
 export const externalArticles: ExternalArticle[] = [
+  {
+    title: 'Do code reviews matter?',
+    url: 'https://medium.com/prod-io/do-code-reviews-matter-93666ebb80a',
+    source: 'Medium',
+    description: 'Why code reviews are worth the time, and how we run them at KNOLSKAPE, from review steps to static analysis with SonarQube.',
+  },
   // {
   //   title: 'My article title',
   //   date: '2025-06-01',

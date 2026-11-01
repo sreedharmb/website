@@ -16,7 +16,7 @@ const external = Boolean(post.source);
 >{post.title}{external && <span class="ext" aria-label={`(opens on ${post.source})`}> ↗</span>}</a>
 <span class="meta muted">
   {post.source && <span class="source">{post.source}</span>}
-  <time datetime={post.date.toISOString()}>{post.dateLabel}</time>
+  {post.date && <time datetime={post.date.toISOString()}>{post.dateLabel}</time>}
 </span>
 
 <style>

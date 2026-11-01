@@ -15,8 +15,8 @@ type MarkdownModule = { frontmatter: Frontmatter; url?: string };
 export type Post = {
   title: string;
   description?: string;
-  date: Date;
-  dateLabel: string;
+  date?: Date;
+  dateLabel?: string;
   url: string;
   /** Set for articles hosted elsewhere, e.g. "LinkedIn". */
   source?: string;
@@ -42,16 +42,16 @@ export function getPosts(): Post[] {
     });
 
   const external: Post[] = externalArticles.map((a) => {
-    const date = new Date(a.date);
+    const date = a.date ? new Date(a.date) : undefined;
     return {
       title: a.title,
       description: a.description,
       date,
-      dateLabel: label(date),
+      dateLabel: date && label(date),
       url: a.url,
       source: a.source,
     };
   });
 
-  return [...local, ...external].sort((a, b) => b.date.getTime() - a.date.getTime());
+  return [...local, ...external].sort((a, b) => (b.date?.getTime() ?? 0) - (a.date?.getTime() ?? 0));
 }
