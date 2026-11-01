@@ -9,12 +9,12 @@
   --color-error: oklch(52% 0.19 27); --color-success: oklch(50% 0.12 150);
   --container: 1440px; --gutter: 64px; --gap-columns: 32px; --section-gap-s: 120px; --section-gap: 144px; --section-gap-l: 176px;
   --z-base: 1; --z-raised: 10; --z-dropdown: 100; --z-sticky: 200; --z-sticky-nav: 300; --z-modal: 400; --z-toast: 500; --z-tooltip: 600;
-  --color-paper: oklch(98.6% 0.008 95); --color-paper-2: oklch(96% 0.022 95); --color-paper-3: oklch(93% 0.03 95);
-  --color-ink: oklch(21% 0.035 265); --color-ink-2: oklch(29% 0.03 265); --color-muted: oklch(44% 0.025 265);
-  --color-rule: oklch(88% 0.012 95); --color-rule-2: oklch(26% 0.035 265);
-  --color-accent: oklch(52% 0.230 264); --color-accent-2: oklch(44% 0.210 264); --color-accent-ink: oklch(98.5% 0.006 95); --color-focus: oklch(54% 0.230 264);
-  --color-sheet: oklch(99.6% 0.003 95);
-  --color-sun: oklch(89% 0.165 95); --color-sun-ink: oklch(21% 0.035 265);
+  --color-paper: oklch(98.6% 0.008 80); --color-paper-2: oklch(96% 0.016 70); --color-paper-3: oklch(93% 0.022 70);
+  --color-ink: oklch(22% 0.015 50); --color-ink-2: oklch(30% 0.014 50); --color-muted: oklch(45% 0.014 50);
+  --color-rule: oklch(88% 0.012 70); --color-rule-2: oklch(25% 0.015 50);
+  --color-accent: oklch(71% 0.185 50); --color-accent-2: oklch(65% 0.190 46); --color-accent-ink: oklch(20% 0.015 50); --color-accent-text: oklch(52% 0.165 42); --color-focus: oklch(54% 0.170 42);
+  --color-sheet: oklch(99.6% 0.003 80);
+  --color-feature: oklch(80% 0.085 320); --color-feature-ink: oklch(20% 0.015 50);
   --font-display: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Newsreader", ui-serif, Georgia, serif;
   --font-outlier: "IBM Plex Mono", ui-monospace, monospace;

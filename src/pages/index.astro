@@ -256,23 +256,23 @@ const story = profile.intro.split(/(?<=\.)\s+/).slice(1).join(' ');
   }
   .record .is-now th,
   .record .is-now td.num {
-    color: var(--color-accent);
+    color: var(--color-accent-text);
   }
 
   /* Four figures as rows: head on 1 to 4, rows on 5 to 12. */
   .figures {
-    background: var(--color-sun);
-    color: var(--color-sun-ink);
+    background: var(--color-feature);
+    color: var(--color-feature-ink);
   }
   .figures h2,
   .figures .figure {
-    color: var(--color-sun-ink);
+    color: var(--color-feature-ink);
   }
   .figures .rows > li {
-    border-top-color: color-mix(in oklch, var(--color-sun-ink) 22%, transparent);
+    border-top-color: color-mix(in oklch, var(--color-feature-ink) 22%, transparent);
   }
   .figures .rows > li:first-child {
-    border-top-color: var(--color-sun-ink);
+    border-top-color: var(--color-feature-ink);
   }
   .figures__head {
     grid-column: 1 / span 4;

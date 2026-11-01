@@ -1,6 +1,6 @@
-/* Hallmark · shape: Split Studio (/), Long Document (/experience/, /about/, posts), Index-First (/projects/, /blog/) · genre: editorial · theme: Almanac, brightened at the owner's request (deal 1/3, seed cto-personal-engineering-leader-6f86·491ce124·2026-11-01·r0) · redesign: full · draw: 36da65
+/* Hallmark · shape: Split Studio (/), Long Document (/experience/, /about/, posts), Index-First (/projects/, /blog/) · genre: editorial · theme: Almanac, brightened in tangerine and plum at the owner's request (deal 1/3, seed cto-personal-engineering-leader-6f86·491ce124·2026-11-01·r0) · redesign: full · draw: 36da65
  * hero: Banner (inner pages), Stage (/) · nav: edge-aligned, the name and four links, a sideways tab row under 40rem · footer: mast, the name large over the links · imagery: photographs, the owner's portrait 1, natural · signature: the portrait set as a printed plate, captioned with the current role
- * axes: light/grotesk-sans/chromatic-cobalt · posture: full palette (paper, cobalt signal, sun band, ink) · modes: light+dark · job: hire · contrast: pass · fold: pass · v2.0.0 */
+ * axes: light/grotesk-sans/chromatic-tangerine · posture: full palette (paper, tangerine signal and contact band, plum feature band, charcoal ink) · modes: light+dark · job: hire · contrast: pass · fold: pass · v2.0.0 */
 /* Hallmark · pre-emit critique: P4 H5 E4 S4 R5 V4 · weakest: S, a personal site risks reading as any CV; the record is set as the printed table only this career fills, the CTO row marked */
 /* Hallmark · hero-review: fix · 5 findings · 4 resolved 1 partial (the greeting head kept as the owner's own words)
  * finish-review: subagent · 7 findings · 5 resolved 2 left to the owner (generic heads and repeated facts are the owner's copy) · gap: none */
@@ -13,31 +13,31 @@
 @import url("./base.css");
 
 /* Page-level roles on top of the theme tokens. */
-:root { --color-band: var(--color-accent); --color-band-ink: var(--color-accent-ink); --color-band-muted: oklch(95% 0.025 264); }
+:root { --color-band: var(--color-accent); --color-band-ink: var(--color-accent-ink); --color-band-muted: oklch(28% 0.02 50); }
 
-/* Dark mode: deep navy paper, the same cobalt and sun lifted for a dark ground. Keeps the site's data-theme wiring. */
+/* Dark mode: warm charcoal paper, the same tangerine and plum lifted for a dark ground. Keeps the site's data-theme wiring. */
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --color-paper: oklch(18% 0.025 265); --color-paper-2: oklch(22% 0.03 265); --color-paper-3: oklch(26% 0.03 265);
-  --color-ink: oklch(96% 0.01 95); --color-ink-2: oklch(88% 0.012 95); --color-muted: oklch(76% 0.02 265);
-  --color-rule: oklch(32% 0.03 265); --color-rule-2: oklch(84% 0.012 95);
-  --color-accent: oklch(74% 0.150 264); --color-accent-2: oklch(82% 0.110 264); --color-accent-ink: oklch(18% 0.025 265); --color-focus: oklch(76% 0.160 264);
-  --color-sheet: oklch(22% 0.03 265);
-  --color-sun: oklch(84% 0.150 95); --color-sun-ink: oklch(18% 0.025 265);
-  --color-band: oklch(34% 0.13 264); --color-band-ink: oklch(96% 0.01 95); --color-band-muted: oklch(84% 0.04 264);
-  --color-plate: oklch(84% 0.01 95);
+  --color-paper: oklch(18% 0.012 50); --color-paper-2: oklch(22% 0.014 50); --color-paper-3: oklch(26% 0.016 50);
+  --color-ink: oklch(95% 0.01 80); --color-ink-2: oklch(87% 0.012 80); --color-muted: oklch(75% 0.014 60);
+  --color-rule: oklch(32% 0.016 50); --color-rule-2: oklch(84% 0.012 80);
+  --color-accent: oklch(74% 0.165 52); --color-accent-2: oklch(80% 0.140 56); --color-accent-ink: oklch(18% 0.012 50); --color-accent-text: oklch(78% 0.150 55); --color-focus: oklch(78% 0.150 55);
+  --color-sheet: oklch(22% 0.014 50);
+  --color-feature: oklch(74% 0.090 320); --color-feature-ink: oklch(18% 0.012 50);
+  --color-band: oklch(74% 0.165 52); --color-band-ink: oklch(18% 0.012 50); --color-band-muted: oklch(26% 0.02 50);
+  --color-plate: oklch(84% 0.01 80);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
     color-scheme: dark;
-    --color-paper: oklch(18% 0.025 265); --color-paper-2: oklch(22% 0.03 265); --color-paper-3: oklch(26% 0.03 265);
-    --color-ink: oklch(96% 0.01 95); --color-ink-2: oklch(88% 0.012 95); --color-muted: oklch(76% 0.02 265);
-    --color-rule: oklch(32% 0.03 265); --color-rule-2: oklch(84% 0.012 95);
-    --color-accent: oklch(74% 0.150 264); --color-accent-2: oklch(82% 0.110 264); --color-accent-ink: oklch(18% 0.025 265); --color-focus: oklch(76% 0.160 264);
-    --color-sheet: oklch(22% 0.03 265);
-    --color-sun: oklch(84% 0.150 95); --color-sun-ink: oklch(18% 0.025 265);
-    --color-band: oklch(34% 0.13 264); --color-band-ink: oklch(96% 0.01 95); --color-band-muted: oklch(84% 0.04 264);
-    --color-plate: oklch(84% 0.01 95);
+    --color-paper: oklch(18% 0.012 50); --color-paper-2: oklch(22% 0.014 50); --color-paper-3: oklch(26% 0.016 50);
+    --color-ink: oklch(95% 0.01 80); --color-ink-2: oklch(87% 0.012 80); --color-muted: oklch(75% 0.014 60);
+    --color-rule: oklch(32% 0.016 50); --color-rule-2: oklch(84% 0.012 80);
+    --color-accent: oklch(74% 0.165 52); --color-accent-2: oklch(80% 0.140 56); --color-accent-ink: oklch(18% 0.012 50); --color-accent-text: oklch(78% 0.150 55); --color-focus: oklch(78% 0.150 55);
+    --color-sheet: oklch(22% 0.014 50);
+    --color-feature: oklch(74% 0.090 320); --color-feature-ink: oklch(18% 0.012 50);
+    --color-band: oklch(74% 0.165 52); --color-band-ink: oklch(18% 0.012 50); --color-band-muted: oklch(26% 0.02 50);
+    --color-plate: oklch(84% 0.01 80);
   }
 }
 

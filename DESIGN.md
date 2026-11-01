@@ -5,19 +5,20 @@ The locked system. Every page shares it; change it on purpose, and this file is 
 ## System
 - Genre: editorial
 - Shape of the first page: Split Studio (home), Long Document (Experience, About, posts), Index (Projects, Writing)
-- Theme: Almanac's structure (ruled tables, mono figures, square corners), brightened: warm white paper, deep navy ink, a vivid cobalt signal, one sunny yellow band
-- Axes: light / grotesk-sans / chromatic-cobalt · posture: full palette (paper, cobalt signal and contact band, sun band for the figures, navy ink)
+- Theme: Almanac's structure (ruled tables, mono figures, square corners), brightened: warm white paper, warm charcoal ink, a tangerine signal, one soft plum band (no blue or yellow: the owner's organisation uses that pairing)
+- Axes: light / grotesk-sans / chromatic-tangerine · posture: full palette (paper, tangerine signal and contact band, plum band for the figures, charcoal ink)
 - Modes: light and dark, from one token set (`data-theme` on `<html>`, saved in `localStorage.theme`)
 
 ## Tokens
 `src/styles/tokens.css` is the source of truth; dark values and page roles live at the top of `src/styles/global.css`.
 ```css
 :root {
-  --color-paper: oklch(98.6% 0.008 95);  --color-paper-2: oklch(96% 0.022 95);  --color-paper-3: oklch(93% 0.03 95);
-  --color-ink: oklch(21% 0.035 265);  --color-ink-2: oklch(29% 0.03 265);  --color-muted: oklch(44% 0.025 265);
-  --color-rule: oklch(88% 0.012 95);  --color-rule-2: oklch(26% 0.035 265);  --color-sheet: oklch(99.6% 0.003 95);
-  --color-accent: oklch(52% 0.230 264);  --color-accent-ink: oklch(98.5% 0.006 95);  --color-focus: oklch(54% 0.230 264);
-  --color-sun: oklch(89% 0.165 95);  --color-sun-ink: oklch(21% 0.035 265);
+  --color-paper: oklch(98.6% 0.008 80);  --color-paper-2: oklch(96% 0.016 70);  --color-paper-3: oklch(93% 0.022 70);
+  --color-ink: oklch(22% 0.015 50);  --color-ink-2: oklch(30% 0.014 50);  --color-muted: oklch(45% 0.014 50);
+  --color-rule: oklch(88% 0.012 70);  --color-rule-2: oklch(25% 0.015 50);  --color-sheet: oklch(99.6% 0.003 80);
+  --color-accent: oklch(71% 0.185 50);  --color-accent-ink: oklch(20% 0.015 50);  /* tangerine fill, charcoal text on it */
+  --color-accent-text: oklch(52% 0.165 42);  --color-focus: oklch(54% 0.170 42);  /* burnt orange where orange is text */
+  --color-feature: oklch(80% 0.085 320);  --color-feature-ink: oklch(20% 0.015 50);  /* soft plum band */
   --font-display: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Newsreader", ui-serif, Georgia, serif;
   --font-outlier: "IBM Plex Mono", ui-monospace, monospace;   /* dates and figures only */
@@ -34,13 +35,13 @@ Spacing, type scale, easings and durations are the scaffold's and live in `token
 ## Surfaces
 - Two rule weights: a 1px hairline between rows, a 2px firm line under a head or a table head. No cards, no shadows.
 - The sheet (`--color-sheet` with a 2px ink rule at its head) holds a printed table: the career record.
-- One sun band (the four figures) and one cobalt band (the contact close) a page at most; `--color-paper-2` for quieter bands.
+- One plum band (the four figures) and one tangerine band (the contact close) a page at most; `--color-paper-2` for quieter bands.
 - Photographs: natural colour, square plates with an inset hairline and a caption that states a fact.
 
 ## Controls
-- Primary: cobalt fill, accent-ink text, 2px radius, 48px tall. One a page.
+- Primary: tangerine fill, charcoal text, 2px radius, 48px tall. One a page.
 - Secondary: 1px ink outline, same radius and height.
-- Links: ink with a cobalt underline (the band's own colour on the cobalt band) that thickens on hover.
+- Links: ink with a tangerine underline (the band's own colour on the tangerine band) that thickens on hover.
 
 ## Motion
 - Still. Only state moves: hover colour, underline weight, a 1px press. Under reduced motion everything ends at once.
