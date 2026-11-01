@@ -1,55 +1,148 @@
 ---
 import Base from '../layouts/Base.astro';
+import Contact from '../components/Contact.astro';
 import { profile, skills, education } from '../data/profile';
+
+const headline = profile.headline.split(/\s*·\s*/).join(', ') + '.';
 ---
 
 <Base title="About">
-  <p class="eyebrow">About</p>
-  <h1>{profile.name}</h1>
-  <p class="muted">{profile.headline}</p>
+  <section class="banner">
+    <div class="container grid">
+      <h1>{profile.name}</h1>
+      <p class="lead">{headline}</p>
+    </div>
+  </section>
 
-  <div class="prose">
-    {profile.about.map((para) => <p>{para}</p>)}
-  </div>
-
-  <h2>Skills</h2>
-  <div class="skills">
-    {
-      skills.map((s) => (
+  <section class="section">
+    <div class="container grid about">
+      <div class="prose about__prose">
+        {profile.about.map((para) => <p>{para}</p>)}
+      </div>
+      <dl class="facts">
         <div>
-          <h3>{s.group}</h3>
-          <ul class="tags">
-            {s.items.map((i) => (
-              <li>{i}</li>
-            ))}
-          </ul>
+          <dt>Now</dt>
+          <dd>{profile.role}</dd>
         </div>
-      ))
-    }
-  </div>
+        <div>
+          <dt>Based in</dt>
+          <dd>{profile.location}</dd>
+        </div>
+        <div>
+          <dt>Education</dt>
+          <dd>
+            {education.degree}, {education.school}, <span class="num">{education.period.replace(/\s+[–-]\s+/, ' to ')}</span>
+            <span class="note">{education.note}</span>
+          </dd>
+        </div>
+        <div>
+          <dt>Elsewhere</dt>
+          <dd>
+            <a href={profile.links.linkedin} target="_blank" rel="me noopener">LinkedIn</a>,{' '}
+            <a href={profile.links.github} target="_blank" rel="me noopener">GitHub</a>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </section>
 
-  <h2>Education</h2>
-  <p>
-    <strong>{education.degree}</strong><br />
-    {education.school} · <span class="muted">{education.period}</span>
-  </p>
-  <p class="muted">{education.note}</p>
+  <section class="section skills" aria-labelledby="skills-title">
+    <div class="container grid">
+      <h2 id="skills-title" class="side-head">Skills</h2>
+      <ul class="rows skills__rows grid">
+        {
+          skills.map((s) => (
+            <li>
+              <h3>{s.group}</h3>
+              <p>{s.items.join(', ')}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
 
-  <h2 id="contact">Contact</h2>
-  <p>
-    The best way to reach me is by email at <a href={`mailto:${profile.email}`}>{profile.email}</a>, or on
-    <a href={profile.links.linkedin} target="_blank" rel="me noopener">LinkedIn</a>. I’m based in {profile.location}
-    and open to relocation.
-  </p>
+  <Contact id="contact" title="Contact">
+    <p>
+      The best way to reach me is by email at <a href={`mailto:${profile.email}`}>{profile.email}</a>, or on{' '}
+      <a href={profile.links.linkedin} target="_blank" rel="me noopener">LinkedIn</a>. I’m based in {profile.location}{' '}
+      and open to relocation.
+    </p>
+  </Contact>
 </Base>
 
 <style>
-  .skills {
-    display: grid;
-    gap: 1.25rem;
+  .about {
+    align-items: start;
+    row-gap: var(--space-2xl);
   }
-  .skills h3 {
-    font-size: 0.95rem;
-    margin-bottom: 0.5rem;
+  .about__prose {
+    grid-column: 1 / span 7;
+  }
+  .about__prose p:first-child {
+    font-size: var(--text-lead);
+    line-height: 1.55;
+    color: var(--color-ink);
+  }
+  .facts {
+    grid-column: 9 / -1;
+    margin: 0;
+    border-top: var(--rule-bar) solid var(--color-rule-2);
+  }
+  .facts > div {
+    padding-block: var(--space-sm);
+    border-bottom: var(--rule-hair) solid var(--color-rule);
+  }
+  dt {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-muted);
+  }
+  dd {
+    margin: var(--space-2xs) 0 0;
+    color: var(--color-ink);
+  }
+  .skills {
+    background: var(--color-paper-2);
+  }
+  .side-head {
+    grid-column: 1 / span 4;
+    max-width: 10ch;
+  }
+  .skills__rows {
+    grid-column: 5 / -1;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+  .skills__rows > li {
+    align-items: baseline;
+    row-gap: var(--space-xs);
+  }
+  .skills__rows h3 {
+    grid-column: 1 / span 3;
+  }
+  .skills__rows p {
+    grid-column: 4 / -1;
+    font-size: 1.0625rem;
+  }
+  .note {
+    display: block;
+    margin-top: var(--space-2xs);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+  @media (max-width: 60rem) {
+    .about__prose,
+    .facts,
+    .side-head,
+    .skills__rows {
+      grid-column: 1 / -1;
+    }
+    .side-head {
+      margin-bottom: var(--space-xl);
+    }
+    .skills__rows h3,
+    .skills__rows p {
+      grid-column: 1 / -1;
+    }
   }
 </style>

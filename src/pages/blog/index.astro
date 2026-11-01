@@ -8,50 +8,69 @@ const posts = getPosts();
 ---
 
 <Base title="Writing" description="Notes on engineering leadership, applied AI and building platforms.">
-  <p class="eyebrow">Writing</p>
-  <h1>Notes and essays</h1>
-  <p class="muted">
-    On engineering leadership, applied AI and building platforms. Most of my writing is on <a href={profile.links.linkedinArticles} target="_blank" rel="noopener">LinkedIn</a>.
-  </p>
+  <section class="banner">
+    <div class="container grid">
+      <h1>Notes and essays</h1>
+      <p class="lead">
+        On engineering leadership, applied AI and building platforms. Most of my writing is on <a href={profile.links.linkedinArticles} target="_blank" rel="noopener">LinkedIn</a>.
+      </p>
+    </div>
+  </section>
 
-  <ul class="posts">
-    {
-      posts.map((post) => (
-        <li>
-          <PostLink post={post} />
-          {post.description && <p class="muted">{post.description}</p>}
-        </li>
-      ))
-    }
-  </ul>
+  <section class="section">
+    <div class="container">
+      <ul class="rows grid posts">
+        {
+          posts.map((post) => (
+            <li>
+              <h2 class="post">
+                <PostLink post={post} />
+              </h2>
+              {post.description && <p class="desc">{post.description}</p>}
+            </li>
+          ))
+        }
+      </ul>
 
-  <p class="more">
-    <a href={profile.links.linkedinArticles} target="_blank" rel="noopener">All my articles on LinkedIn ↗</a>
-  </p>
+      <p class="more">
+        <a href={profile.links.linkedinArticles} target="_blank" rel="noopener">All my articles on LinkedIn</a>
+      </p>
+    </div>
+  </section>
 </Base>
 
 <style>
-  .posts {
-    list-style: none;
-    padding: 0;
-    margin-top: 2rem;
+  .posts > li {
+    padding-block: var(--space-xl);
+    row-gap: var(--space-md);
+    align-items: baseline;
   }
-  .posts li {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid var(--border);
+  .post {
+    grid-column: 1 / span 7;
+    display: grid;
+    gap: var(--space-sm);
+    font-size: var(--text-section);
+    line-height: 1.05;
   }
-  .posts li > :global(a) {
-    font-weight: 600;
-    font-size: 1.1rem;
+  .post :global(a) {
+    text-decoration-thickness: 2px;
   }
-  .posts p {
-    margin: 0.2rem 0 0;
-    font-size: 0.95rem;
+  .post :global(.meta) {
+    letter-spacing: 0;
+    color: var(--color-muted);
+  }
+  .desc {
+    grid-column: 8 / -1;
+    align-self: end;
+    font-size: 1.0625rem;
   }
   .more {
-    margin-top: 1.5rem;
+    margin-top: var(--space-2xl);
+  }
+  @media (max-width: 60rem) {
+    .post,
+    .desc {
+      grid-column: 1 / -1;
+    }
   }
 </style>

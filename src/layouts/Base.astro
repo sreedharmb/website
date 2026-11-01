@@ -29,6 +29,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    />
     <script is:inline>
       try {
         const t = localStorage.getItem('theme');
@@ -37,8 +43,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     </script>
   </head>
   <body>
+    <a class="skip" href="#main">Skip to content</a>
     <Header />
-    <main class="container">
+    <main id="main">
       <slot />
     </main>
     <Footer />
@@ -46,9 +53,26 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 </html>
 
 <style>
+  .skip {
+    position: absolute;
+    left: var(--space-md);
+    top: calc(-1 * var(--space-3xl));
+    z-index: var(--z-toast);
+    padding: var(--space-xs) var(--space-md);
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+  .skip:focus-visible {
+    top: var(--space-md);
+  }
   main {
-    padding-top: 2.5rem;
-    padding-bottom: 4rem;
-    min-height: 70vh;
+    display: block;
+    min-height: 60dvh;
+  }
+</style>
+<style is:global>
+  html,
+  body {
+    overflow-x: clip;
   }
 </style>

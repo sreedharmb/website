@@ -1,78 +1,99 @@
 ---
 import Base from '../layouts/Base.astro';
 import { company, roles, education } from '../data/profile';
+
+const split = (period: string) => period.split(/\s+[–-]\s+/);
 ---
 
 <Base title="Experience" description="13 years at KNOLSKAPE, from Software Engineer to CTO.">
-  <p class="eyebrow">Experience</p>
-  <h1>Software Engineer to CTO</h1>
-  <p class="muted">
-    {company.name}: {company.blurb}
-  </p>
+  <section class="banner">
+    <div class="container grid">
+      <h1>Software Engineer to CTO</h1>
+      <p class="lead">{company.name}: {company.blurb}, {company.location}.</p>
+    </div>
+  </section>
 
-  <ol class="timeline">
-    {
-      roles.map((r) => (
+  <section class="section">
+    <div class="container">
+      <ol class="rows grid timeline">
+        {
+          roles.map((r, i) => {
+            const [from, to] = split(r.period);
+            return (
+              <li class={i === 0 ? 'is-now' : undefined}>
+                <div class="role">
+                  <p class="num period">
+                    {from}
+                    <br />
+                    to {to}
+                  </p>
+                  <h2>{r.title}</h2>
+                </div>
+                <ul class="prose points">
+                  {r.points.map((pt) => (
+                    <li>{pt}</li>
+                  ))}
+                </ul>
+              </li>
+            );
+          })
+        }
         <li>
-          <div class="head">
-            <h2>{r.title}</h2>
-            <span class="muted">{r.period}</span>
+          <div class="role">
+            <p class="num period">{education.period.replace(/\s+[–-]\s+/, ' to ')}</p>
+            <h2>Education</h2>
           </div>
-          <ul class="prose">
-            {r.points.map((pt) => (
-              <li>{pt}</li>
-            ))}
-          </ul>
+          <p class="edu"><strong>{education.degree}</strong>, {education.school}</p>
         </li>
-      ))
-    }
-  </ol>
-
-  <h2>Education</h2>
-  <p>
-    <strong>{education.degree}</strong>, {education.school} · <span class="muted">{education.period}</span>
-  </p>
+      </ol>
+    </div>
+  </section>
 </Base>
 
 <style>
-  .timeline {
-    list-style: none;
-    padding: 0;
-    margin: 2rem 0 0;
-    border-left: 2px solid var(--border);
-  }
   .timeline > li {
-    position: relative;
-    padding: 0 0 1.75rem 1.5rem;
+    padding-block: var(--space-xl) var(--space-2xl);
+    row-gap: var(--space-lg);
   }
-  .timeline > li::before {
-    content: '';
-    position: absolute;
-    left: -7px;
-    top: 0.45rem;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--bg);
-    border: 2px solid var(--accent);
+  .role {
+    grid-column: 1 / span 4;
+    display: grid;
+    gap: var(--space-xs);
+    align-content: start;
   }
-  .head {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 0.25rem 1rem;
-    margin-bottom: 0.5rem;
+  .period {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
   }
-  .head h2 {
-    font-size: 1.15rem;
+  .role h2 {
+    font-size: var(--text-title);
+    line-height: 1.2;
+  }
+  .is-now .period {
+    color: var(--color-accent);
+  }
+  .is-now h2 {
+    font-size: var(--text-2xl);
+  }
+  .points {
+    grid-column: 5 / -1;
     margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.6;
   }
-  .head span {
-    font-size: 0.9rem;
+  .edu {
+    grid-column: 5 / -1;
+    font-size: 1.0625rem;
   }
-  .timeline ul {
-    margin: 0;
-    font-size: 0.97rem;
+  .edu strong {
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+  @media (max-width: 60rem) {
+    .role,
+    .points,
+    .edu {
+      grid-column: 1 / -1;
+    }
   }
 </style>

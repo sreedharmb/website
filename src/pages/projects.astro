@@ -1,54 +1,20 @@
 ---
 import Base from '../layouts/Base.astro';
+import ProjectIndex from '../components/ProjectIndex.astro';
 import { projects } from '../data/profile';
 ---
 
 <Base title="Projects" description="Things I have built, from AI agents to data platforms.">
-  <p class="eyebrow">Projects</p>
-  <h1>Things I’ve built</h1>
-  <p class="muted">Recent hands-on builds, plus a few platforms from earlier in my career.</p>
+  <section class="banner">
+    <div class="container grid">
+      <h1>Things I’ve built</h1>
+      <p class="lead">Recent hands-on builds, plus a few platforms from earlier in my career.</p>
+    </div>
+  </section>
 
-  <div class="list">
-    {
-      projects.map((p) => (
-        <article class="card">
-          <div class="head">
-            <h2>{p.link ? <a href={p.link}>{p.title}</a> : p.title}</h2>
-            <span class="muted">{p.year}</span>
-          </div>
-          <p>{p.summary}</p>
-          <ul class="tags">
-            {p.tags.map((t) => (
-              <li>{t}</li>
-            ))}
-          </ul>
-        </article>
-      ))
-    }
-  </div>
+  <section class="section">
+    <div class="container">
+      <ProjectIndex projects={projects} level={2} />
+    </div>
+  </section>
 </Base>
-
-<style>
-  .list {
-    display: grid;
-    gap: 1rem;
-    margin-top: 2rem;
-  }
-  .head {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 0.25rem 1rem;
-  }
-  .head h2 {
-    font-size: 1.15rem;
-    margin: 0 0 0.5rem;
-  }
-  .head span {
-    font-size: 0.85rem;
-  }
-  .card p {
-    font-size: 0.97rem;
-  }
-</style>

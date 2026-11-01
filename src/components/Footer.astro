@@ -4,31 +4,53 @@ const year = new Date().getFullYear();
 ---
 
 <footer>
-  <div class="container row">
-    <span class="muted">© {year} {profile.name}</span>
-    <span class="links">
-      <a href={`mailto:${profile.email}`}>Email</a>
-      <a href={profile.links.linkedin} rel="me noopener" target="_blank">LinkedIn</a>
-      <a href={profile.links.github} rel="me noopener" target="_blank">GitHub</a>
-    </span>
+  <div class="container mast">
+    <p class="wordmark"><a href="/">{profile.name}</a></p>
+    <div class="row">
+      <span class="links">
+        <a href={`mailto:${profile.email}`}>Email</a>
+        <a href={profile.links.linkedin} rel="me noopener" target="_blank">LinkedIn</a>
+        <a href={profile.links.github} rel="me noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="muted">© <span class="num">{year}</span> {profile.name}</span>
+    </div>
   </div>
 </footer>
 
 <style>
   footer {
-    border-top: 1px solid var(--border);
-    font-size: 0.9rem;
+    padding-block: var(--space-3xl) var(--space-xl);
+  }
+  .mast {
+    display: grid;
+    gap: var(--space-xl);
+  }
+  .wordmark {
+    font: 600 clamp(3rem, 9vw, 8.5rem) / 0.9 var(--font-display);
+    letter-spacing: -0.045em;
+    color: var(--color-ink);
+    max-width: none;
+    overflow-wrap: break-word;
+    min-width: 0;
+  }
+  .wordmark a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .wordmark a:hover {
+    color: var(--color-ink-2);
   }
   .row {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 0.5rem 1rem;
-    padding-top: 1.5rem;
-    padding-bottom: 2rem;
+    gap: var(--space-md) var(--space-xl);
+    padding-top: var(--space-md);
+    border-top: var(--rule-bar) solid var(--color-rule-2);
+    font-size: var(--text-sm);
   }
   .links {
     display: flex;
-    gap: 1rem;
+    gap: var(--space-lg);
   }
 </style>

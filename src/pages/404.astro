@@ -3,7 +3,26 @@ import Base from '../layouts/Base.astro';
 ---
 
 <Base title="Page not found">
-  <p class="eyebrow">404</p>
-  <h1>Page not found</h1>
-  <p class="muted">That page doesn’t exist. <a href="/">Go back home →</a></p>
+  <section class="banner lost">
+    <div class="container grid">
+      <p class="num code" aria-hidden="true">404</p>
+      <h1>Page not found</h1>
+      <p class="lead">That page doesn’t exist. <a href="/">Go back home</a></p>
+    </div>
+  </section>
 </Base>
+
+<style>
+  .lost {
+    border-bottom: 0;
+    padding-block: var(--space-3xl);
+  }
+  .code {
+    grid-column: 1 / -1;
+    font-size: clamp(6rem, 16vw, 14rem);
+    font-weight: 500;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    color: var(--color-ink);
+  }
+</style>

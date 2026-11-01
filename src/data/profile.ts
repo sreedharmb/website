@@ -36,7 +36,8 @@ export type Role = {
 
 export const company = {
   name: 'KNOLSKAPE Solutions',
-  blurb: 'B2B SaaS for learning & development and HR tech, serving Fortune 500 clients · Bengaluru',
+  blurb: 'B2B SaaS for learning & development and HR tech, serving Fortune 500 clients',
+  location: 'Bengaluru',
 };
 
 export const roles: Role[] = [

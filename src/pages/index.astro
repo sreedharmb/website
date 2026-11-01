@@ -1,145 +1,396 @@
 ---
 import Base from '../layouts/Base.astro';
-import { profile, highlights, projects } from '../data/profile';
+import { profile, highlights, projects, roles, company } from '../data/profile';
 import { getPosts } from '../data/posts';
 import PostLink from '../components/PostLink.astro';
+import Contact from '../components/Contact.astro';
+import ProjectIndex from '../components/ProjectIndex.astro';
 
 const posts = getPosts().slice(0, 3);
+const [lead, ...more] = posts;
+const split = (period: string) => period.split(/\s+[–-]\s+/);
+// The intro after its first sentence, which the hero already carries.
+const story = profile.intro.split(/(?<=\.)\s+/).slice(1).join(' ');
 ---
 
 <Base>
-  <section class="hero">
-    <p class="eyebrow">{profile.role}</p>
-    <h1>Hi, I’m {profile.name}.</h1>
-    <p class="lead">{profile.intro}</p>
-    <p class="muted headline">{profile.headline} · {profile.location}</p>
-    <div class="cta">
-      <a class="btn primary" href={`mailto:${profile.email}`}>Get in touch</a>
-      <a class="btn" href={profile.links.linkedin} target="_blank" rel="me noopener">LinkedIn</a>
-      <a class="btn" href="/experience/">Experience</a>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="container grid hero__grid">
+      <div class="hero__text">
+        <h1 id="hero-title">Hi, I’m {profile.name}.</h1>
+        <p class="lead">I build B2B SaaS and ship generative AI to production.</p>
+        <div class="actions">
+          <a class="btn btn--primary" href={`mailto:${profile.email}`}>Get in touch</a>
+          <a class="btn" href={profile.links.linkedin} target="_blank" rel="me noopener">LinkedIn</a>
+        </div>
+      </div>
+      <figure class="hero__plate">
+        <div class="photo" data-slot="portrait" data-alt="A head-and-shoulders portrait of Sreedhar M B">
+          <img
+            src="/images/portrait-1200.jpg"
+            srcset="/images/portrait-480.webp 480w, /images/portrait-800.webp 800w, /images/portrait-1200.webp 1200w"
+            sizes="(min-width: 60rem) 45vw, 70vw"
+            width="1200"
+            height="1200"
+            alt="Sreedhar M B, smiling, in a blue denim shirt"
+            style="object-position: 50% 30%"
+            fetchpriority="high"
+          />
+        </div>
+        <figcaption>
+          <span>{profile.role}, {profile.location}.</span>
+          <span class="since">With KNOLSKAPE since <span class="num">2013</span></span>
+        </figcaption>
+      </figure>
     </div>
   </section>
 
-  <section aria-label="Highlights" class="stats">
-    {
-      highlights.map((h) => (
-        <div class="stat">
-          <strong>{h.value}</strong>
-          <span class="muted">{h.label}</span>
-        </div>
-      ))
-    }
+  <section class="section story" aria-label="In short">
+    <div class="container grid">
+      <p class="statement">{story}</p>
+    </div>
   </section>
 
-  <section>
-    <h2>Recent builds</h2>
-    <div class="grid">
-      {
-        projects.slice(0, 3).map((p) => (
-          <article class="card">
-            <h3>{p.title}</h3>
-            <p class="muted">{p.summary}</p>
-            <ul class="tags">
-              {p.tags.map((t) => (
-                <li>{t}</li>
+  <section class="section record" aria-labelledby="record-title">
+    <div class="container grid">
+      <div class="head-block record__head">
+        <h2 id="record-title">Six roles at one company</h2>
+        <p class="muted">{company.name}: {company.blurb}.</p>
+        <p><a href="/experience/">Read the full record</a></p>
+      </div>
+      <div class="sheet record__sheet">
+        <table>
+          <caption>{company.name}, {company.location}</caption>
+          <thead>
+            <tr>
+              <th scope="col">Role</th>
+              <th scope="col" class="num">From</th>
+              <th scope="col" class="num">To</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              roles.map((r, i) => {
+                const [from, to] = split(r.period);
+                return (
+                  <tr class={i === 0 ? 'is-now' : undefined}>
+                    <th scope="row">{r.title}</th>
+                    <td class="num">{from}</td>
+                    <td class="num">{to}</td>
+                  </tr>
+                );
+              })
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section figures" aria-labelledby="figures-title">
+    <div class="container grid">
+      <div class="head-block figures__head">
+        <h2 id="figures-title">The record in four figures</h2>
+      </div>
+      <ul class="rows figures__rows grid">
+        {
+          highlights.map((h) => (
+            <li>
+              <span class="num figure">{h.value}</span>
+              <span class="figure__label">{h.label}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section builds" aria-labelledby="builds-title">
+    <div class="container">
+      <div class="builds__head">
+        <h2 id="builds-title">Recent builds</h2>
+        <a href="/projects/">All projects</a>
+      </div>
+      <ProjectIndex projects={projects.slice(0, 3)} />
+    </div>
+  </section>
+
+  {
+    lead && (
+      <section class="section writing" aria-label="Writing">
+        <div class="container grid">
+          <div class="writing__lead">
+            <h2 class="writing__title">
+              <PostLink post={lead} />
+            </h2>
+            {lead.description && <p class="lead">{lead.description}</p>}
+          </div>
+          {more.length > 0 && (
+            <ul class="writing__more">
+              {more.map((post) => (
+                <li>
+                  <PostLink post={post} />
+                </li>
               ))}
             </ul>
-          </article>
-        ))
-      }
-    </div>
-    <p><a href="/projects/">All projects →</a></p>
-  </section>
+          )}
+          <p class="writing__links">
+            <a href="/blog/">All writing</a>
+            <a href={profile.links.linkedinArticles} target="_blank" rel="noopener">Articles on LinkedIn</a>
+          </p>
+        </div>
+      </section>
+    )
+  }
 
-  <section>
-    <h2>Writing</h2>
-    <ul class="posts">
-      {
-        posts.map((post) => (
-          <li>
-            <PostLink post={post} />
-          </li>
-        ))
-      }
-    </ul>
-    <p>
-      <a href="/blog/">All writing →</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href={profile.links.linkedinArticles} target="_blank" rel="noopener">Articles on LinkedIn ↗</a>
-    </p>
-  </section>
+  <Contact />
 </Base>
 
 <style>
+  /* Stage: the text on columns 1 to 7, the portrait plate on 8 to 12, centred on each other. */
   .hero {
-    padding: 1.5rem 0 1rem;
+    min-height: calc(100dvh - 73px);
+    display: grid;
+    align-items: center;
+    padding-block: var(--space-xl);
   }
-  .lead {
-    font-size: 1.2rem;
-    max-width: 38rem;
+  .hero__grid {
+    align-items: center;
+    row-gap: var(--space-xl);
   }
-  .headline {
-    font-size: 0.95rem;
+  .hero__text {
+    grid-column: 1 / span 6;
+    display: grid;
+    gap: var(--space-lg);
   }
-  .cta {
+  .hero h1 {
+    font-size: clamp(3rem, 5.8vw + 0.5rem, 6.5rem);
+    max-width: 11ch;
+    text-wrap: balance;
+  }
+  .hero .actions {
+    margin-top: var(--space-xs);
+  }
+  .hero__plate {
+    grid-column: 7 / -1;
+    margin: 0;
+    max-width: min(100%, calc(100dvh - 15rem));
+  }
+  .photo {
+    aspect-ratio: 1;
+    border-radius: var(--radius-card);
+    background: var(--color-sheet);
+    outline: var(--rule-hair) solid var(--color-rule-2);
+    outline-offset: -1px;
+  }
+  /* The studio backdrop takes the sheet's tone, so the portrait prints on the stock. */
+  :global(:root:not([data-theme='dark'])) .photo > img {
+    mix-blend-mode: multiply;
+  }
+  /* Dark mode: the plate prints on a pale grey mat, so its backdrop never outshines the page. */
+  :global(:root[data-theme='dark']) .photo {
+    background: var(--color-plate);
+  }
+  :global(:root[data-theme='dark']) .photo > img {
+    mix-blend-mode: multiply;
+  }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .photo {
+      background: var(--color-plate);
+    }
+    :global(:root:not([data-theme='light'])) .photo > img {
+      mix-blend-mode: multiply;
+    }
+  }
+  figcaption {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.6rem;
-    margin-top: 1.5rem;
-  }
-  .btn {
-    display: inline-block;
-    padding: 0.55rem 1rem;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    color: var(--text);
-    text-decoration: none;
+    justify-content: space-between;
+    gap: var(--space-2xs) var(--space-md);
+    margin-top: var(--space-sm);
+    padding-top: var(--space-xs);
+    border-top: var(--rule-bar) solid var(--color-rule-2);
+    font-size: var(--text-sm);
     font-weight: 500;
-    font-size: 0.95rem;
+    color: var(--color-muted);
   }
-  .btn:hover {
-    border-color: var(--muted);
+  .since .num {
+    color: var(--color-ink);
   }
-  .btn.primary {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--bg);
+
+  /* The statement: the owner's own sentence, set in the prose face at section size. */
+  .story {
+    padding-block: var(--section-gap) var(--section-gap-s);
+    border-top: var(--rule-hair) solid var(--color-rule);
   }
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
-    gap: 1rem;
-    margin-top: 2.5rem;
-    padding: 1.5rem 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+  .statement {
+    grid-column: 1 / span 10;
+    max-width: none;
+    font: 400 var(--text-section) / 1.18 var(--font-body);
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+    text-wrap: balance;
   }
-  .stat strong {
-    display: block;
-    font-size: 1.6rem;
-    letter-spacing: -0.02em;
+
+  /* The record: head block on 1 to 4, the printed sheet on 6 to 12. */
+  .record__head {
+    grid-column: 1 / span 4;
   }
-  .stat span {
-    font-size: 0.88rem;
+  .record__head h2 {
+    max-width: 12ch;
+  }
+  .record__sheet {
+    grid-column: 6 / -1;
+  }
+  .record th[scope='row'] {
+    font: 500 var(--text-lead) / 1.3 var(--font-body);
+    color: var(--color-ink);
+    text-align: left;
+    padding: var(--space-sm) 0;
+    border-top: var(--rule-hair) solid var(--color-rule);
+    border-bottom: 0;
+    white-space: normal;
+  }
+  .record td.num {
+    color: var(--color-ink-2);
+  }
+  .record .is-now th,
+  .record .is-now td.num {
+    color: var(--color-accent);
+  }
+
+  /* Four figures as rows: head on 1 to 4, rows on 5 to 12. */
+  .figures {
+    background: var(--color-paper-2);
+  }
+  .figures__head {
+    grid-column: 1 / span 4;
+  }
+  .figures__head h2 {
+    max-width: 14ch;
+  }
+  .figures__rows {
+    grid-column: 5 / -1;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+  .figures__rows > li {
+    align-items: baseline;
+    padding-block: var(--space-lg);
+  }
+  .figure {
+    grid-column: 1 / span 3;
+    font-size: var(--text-display-s);
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--color-ink);
+  }
+  .figure__label {
+    grid-column: 4 / -1;
+    font-size: var(--text-lead);
     line-height: 1.4;
-    display: block;
   }
-  .grid {
-    display: grid;
-    gap: 1rem;
-    margin-bottom: 1rem;
+
+  /* Recent builds as an index: year, title, what it is, what it is built with. */
+  .builds__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-2xl);
   }
-  .card p {
-    font-size: 0.95rem;
+  .builds__head a {
+    white-space: nowrap;
   }
-  .posts {
+  /* The latest essay, set as the section's head. */
+  .writing {
+    border-top: var(--rule-hair) solid var(--color-rule);
+    padding-block: var(--section-gap) var(--section-gap-s);
+  }
+  .writing .grid {
+    align-items: end;
+  }
+  .writing__lead {
+    display: contents;
+  }
+  .writing__title {
+    grid-column: 1 / span 7;
+    max-width: 18ch;
+    font-size: var(--text-display-s);
+  }
+  .writing__lead .lead {
+    grid-column: 8 / -1;
+  }
+  .writing__title :global(a) {
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.12em;
+  }
+  .writing__title :global(.meta) {
+    display: flex;
+    margin-top: var(--space-md);
+    font: 500 var(--text-sm) / 1.3 var(--font-body);
+    letter-spacing: 0;
+    color: var(--color-muted);
+  }
+  .writing__more {
+    grid-column: 1 / span 8;
     list-style: none;
+    margin: var(--space-xl) 0 0;
     padding: 0;
   }
-  .posts li {
+  .writing__more li {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 0.25rem 1rem;
-    padding: 0.6rem 0;
-    border-bottom: 1px solid var(--border);
+    gap: var(--space-2xs) var(--space-md);
+    padding-block: var(--space-sm);
+    border-top: var(--rule-hair) solid var(--color-rule);
+  }
+  .writing__links {
+    grid-column: 8 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-xl);
+    margin-top: var(--space-2xl);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 60rem) {
+    .hero {
+      min-height: 0;
+      padding-block: var(--space-xl) var(--space-2xl);
+    }
+    .hero__text,
+    .hero__plate {
+      grid-column: 1 / -1;
+    }
+    .hero__plate {
+      order: -1;
+      max-width: min(20rem, 70%);
+    }
+    .statement,
+    .record__head,
+    .record__sheet,
+    .figures__head,
+    .figures__rows,
+    .writing__title,
+    .writing__lead .lead,
+    .writing__more,
+    .writing__links {
+      grid-column: 1 / -1;
+    }
+    .record__head,
+    .figures__head {
+      margin-bottom: var(--space-xl);
+    }
+  }
+  @media (max-width: 40rem) {
+    .figure,
+    .figure__label {
+      grid-column: 1 / -1;
+    }
+    .figures__rows > li {
+      row-gap: var(--space-xs);
+    }
   }
 </style>
