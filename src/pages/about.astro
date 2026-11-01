@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import { profile, skills, education } from '../data/profile';
+---
+
+<Base title="About">
+  <p class="eyebrow">About</p>
+  <h1>{profile.name}</h1>
+  <p class="muted">{profile.headline}</p>
+
+  <div class="prose">
+    {profile.about.map((para) => <p>{para}</p>)}
+  </div>
+
+  <h2>Skills</h2>
+  <div class="skills">
+    {
+      skills.map((s) => (
+        <div>
+          <h3>{s.group}</h3>
+          <ul class="tags">
+            {s.items.map((i) => (
+              <li>{i}</li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+
+  <h2>Education</h2>
+  <p>
+    <strong>{education.degree}</strong><br />
+    {education.school} · <span class="muted">{education.period}</span>
+  </p>
+  <p class="muted">{education.note}</p>
+
+  <h2 id="contact">Contact</h2>
+  <p>
+    The best way to reach me is by email at <a href={`mailto:${profile.email}`}>{profile.email}</a>, or on
+    <a href={profile.links.linkedin} target="_blank" rel="me noopener">LinkedIn</a>. I’m based in {profile.location}
+    and open to relocation.
+  </p>
+</Base>
+
+<style>
+  .skills {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .skills h3 {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+  }
+</style>

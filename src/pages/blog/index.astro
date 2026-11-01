@@ -1,0 +1,48 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getPosts } from '../../data/posts';
+
+const posts = getPosts();
+---
+
+<Base title="Writing" description="Notes on engineering leadership, applied AI and building platforms.">
+  <p class="eyebrow">Writing</p>
+  <h1>Notes and essays</h1>
+  <p class="muted">On engineering leadership, applied AI and building platforms.</p>
+
+  <ul class="posts">
+    {
+      posts.map((post) => (
+        <li>
+          <a href={post.url}>{post.title}</a>
+          <time class="muted" datetime={post.date.toISOString()}>{post.dateLabel}</time>
+          {post.description && <p class="muted">{post.description}</p>}
+        </li>
+      ))
+    }
+  </ul>
+</Base>
+
+<style>
+  .posts {
+    list-style: none;
+    padding: 0;
+    margin-top: 2rem;
+  }
+  .posts li {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .posts a {
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  .posts time {
+    display: block;
+    font-size: 0.85rem;
+  }
+  .posts p {
+    margin: 0.4rem 0 0;
+    font-size: 0.95rem;
+  }
+</style>

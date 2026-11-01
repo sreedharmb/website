@@ -1,0 +1,149 @@
+---
+import Base from '../layouts/Base.astro';
+import { profile, highlights, projects } from '../data/profile';
+import { getPosts } from '../data/posts';
+
+const posts = getPosts().slice(0, 3);
+---
+
+<Base>
+  <section class="hero">
+    <p class="eyebrow">{profile.role}</p>
+    <h1>Hi, I’m {profile.name}.</h1>
+    <p class="lead">{profile.intro}</p>
+    <p class="muted headline">{profile.headline} · {profile.location}</p>
+    <div class="cta">
+      <a class="btn primary" href={`mailto:${profile.email}`}>Get in touch</a>
+      <a class="btn" href={profile.links.linkedin} target="_blank" rel="me noopener">LinkedIn</a>
+      <a class="btn" href="/experience/">Experience</a>
+    </div>
+  </section>
+
+  <section aria-label="Highlights" class="stats">
+    {
+      highlights.map((h) => (
+        <div class="stat">
+          <strong>{h.value}</strong>
+          <span class="muted">{h.label}</span>
+        </div>
+      ))
+    }
+  </section>
+
+  <section>
+    <h2>Recent builds</h2>
+    <div class="grid">
+      {
+        projects.slice(0, 3).map((p) => (
+          <article class="card">
+            <h3>{p.title}</h3>
+            <p class="muted">{p.summary}</p>
+            <ul class="tags">
+              {p.tags.map((t) => (
+                <li>{t}</li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+    <p><a href="/projects/">All projects →</a></p>
+  </section>
+
+  {
+    posts.length > 0 && (
+      <section>
+        <h2>Writing</h2>
+        <ul class="posts">
+          {posts.map((post) => (
+            <li>
+              <a href={post.url}>{post.title}</a>
+              <time class="muted" datetime={post.date.toISOString()}>
+                {post.dateLabel}
+              </time>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</Base>
+
+<style>
+  .hero {
+    padding: 1.5rem 0 1rem;
+  }
+  .lead {
+    font-size: 1.2rem;
+    max-width: 38rem;
+  }
+  .headline {
+    font-size: 0.95rem;
+  }
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+  }
+  .btn {
+    display: inline-block;
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+  .btn:hover {
+    border-color: var(--muted);
+  }
+  .btn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+    gap: 1rem;
+    margin-top: 2.5rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .stat strong {
+    display: block;
+    font-size: 1.6rem;
+    letter-spacing: -0.02em;
+  }
+  .stat span {
+    font-size: 0.88rem;
+    line-height: 1.4;
+    display: block;
+  }
+  .grid {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .card p {
+    font-size: 0.95rem;
+  }
+  .posts {
+    list-style: none;
+    padding: 0;
+  }
+  .posts li {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.25rem 1rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .posts time {
+    font-size: 0.9rem;
+  }
+</style>

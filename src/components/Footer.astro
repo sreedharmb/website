@@ -1,0 +1,34 @@
+---
+import { profile } from '../data/profile';
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <div class="container row">
+    <span class="muted">© {year} {profile.name}</span>
+    <span class="links">
+      <a href={`mailto:${profile.email}`}>Email</a>
+      <a href={profile.links.linkedin} rel="me noopener" target="_blank">LinkedIn</a>
+      <a href={profile.links.github} rel="me noopener" target="_blank">GitHub</a>
+    </span>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--border);
+    font-size: 0.9rem;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+  }
+  .links {
+    display: flex;
+    gap: 1rem;
+  }
+</style>

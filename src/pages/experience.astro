@@ -1,0 +1,78 @@
+---
+import Base from '../layouts/Base.astro';
+import { company, roles, education } from '../data/profile';
+---
+
+<Base title="Experience" description="13 years at KNOLSKAPE, from Software Engineer to CTO.">
+  <p class="eyebrow">Experience</p>
+  <h1>Software Engineer to CTO</h1>
+  <p class="muted">
+    {company.name}: {company.blurb}
+  </p>
+
+  <ol class="timeline">
+    {
+      roles.map((r) => (
+        <li>
+          <div class="head">
+            <h2>{r.title}</h2>
+            <span class="muted">{r.period}</span>
+          </div>
+          <ul class="prose">
+            {r.points.map((pt) => (
+              <li>{pt}</li>
+            ))}
+          </ul>
+        </li>
+      ))
+    }
+  </ol>
+
+  <h2>Education</h2>
+  <p>
+    <strong>{education.degree}</strong>, {education.school} · <span class="muted">{education.period}</span>
+  </p>
+</Base>
+
+<style>
+  .timeline {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0;
+    border-left: 2px solid var(--border);
+  }
+  .timeline > li {
+    position: relative;
+    padding: 0 0 1.75rem 1.5rem;
+  }
+  .timeline > li::before {
+    content: '';
+    position: absolute;
+    left: -7px;
+    top: 0.45rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+  }
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.25rem 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .head h2 {
+    font-size: 1.15rem;
+    margin: 0;
+  }
+  .head span {
+    font-size: 0.9rem;
+  }
+  .timeline ul {
+    margin: 0;
+    font-size: 0.97rem;
+  }
+</style>
