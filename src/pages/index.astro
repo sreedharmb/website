@@ -261,7 +261,18 @@ const story = profile.intro.split(/(?<=\.)\s+/).slice(1).join(' ');
 
   /* Four figures as rows: head on 1 to 4, rows on 5 to 12. */
   .figures {
-    background: var(--color-paper-2);
+    background: var(--color-sun);
+    color: var(--color-sun-ink);
+  }
+  .figures h2,
+  .figures .figure {
+    color: var(--color-sun-ink);
+  }
+  .figures .rows > li {
+    border-top-color: color-mix(in oklch, var(--color-sun-ink) 22%, transparent);
+  }
+  .figures .rows > li:first-child {
+    border-top-color: var(--color-sun-ink);
   }
   .figures__head {
     grid-column: 1 / span 4;
