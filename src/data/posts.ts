@@ -1,5 +1,7 @@
-// Blog posts are Markdown files in src/pages/blog/. Each needs `title`, `date`
-// and `description` in its frontmatter, and `draft: true` hides it.
+// Writing = local Markdown posts in src/pages/blog/ plus external articles
+// listed in profile.ts. Local posts need `title`, `date` and `description` in
+// their frontmatter; `draft: true` hides one.
+import { externalArticles } from './profile';
 
 type Frontmatter = {
   title: string;
@@ -16,12 +18,17 @@ export type Post = {
   date: Date;
   dateLabel: string;
   url: string;
+  /** Set for articles hosted elsewhere, e.g. "LinkedIn". */
+  source?: string;
 };
 
 const modules = import.meta.glob<MarkdownModule>('../pages/blog/*.md', { eager: true });
 
+const label = (date: Date) =>
+  date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
 export function getPosts(): Post[] {
-  return Object.values(modules)
+  const local: Post[] = Object.values(modules)
     .filter((m) => !m.frontmatter.draft && m.url)
     .map((m) => {
       const date = new Date(m.frontmatter.date);
@@ -29,9 +36,22 @@ export function getPosts(): Post[] {
         title: m.frontmatter.title,
         description: m.frontmatter.description,
         date,
-        dateLabel: date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
+        dateLabel: label(date),
         url: `${m.url}/`,
       };
-    })
-    .sort((a, b) => b.date.getTime() - a.date.getTime());
+    });
+
+  const external: Post[] = externalArticles.map((a) => {
+    const date = new Date(a.date);
+    return {
+      title: a.title,
+      description: a.description,
+      date,
+      dateLabel: label(date),
+      url: a.url,
+      source: a.source,
+    };
+  });
+
+  return [...local, ...external].sort((a, b) => b.date.getTime() - a.date.getTime());
 }

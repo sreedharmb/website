@@ -1,0 +1,38 @@
+---
+import type { Post } from '../data/posts';
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const external = Boolean(post.source);
+---
+
+<a
+  href={post.url}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener' : undefined}
+>{post.title}{external && <span class="ext" aria-label={`(opens on ${post.source})`}> ↗</span>}</a>
+<span class="meta muted">
+  {post.source && <span class="source">{post.source}</span>}
+  <time datetime={post.date.toISOString()}>{post.dateLabel}</time>
+</span>
+
+<style>
+  .ext {
+    font-size: 0.85em;
+  }
+  .meta {
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: 0.85rem;
+  }
+  .source {
+    padding: 0.05rem 0.5rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    font-size: 0.75rem;
+  }
+</style>

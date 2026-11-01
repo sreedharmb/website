@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import { profile, highlights, projects } from '../data/profile';
 import { getPosts } from '../data/posts';
+import PostLink from '../components/PostLink.astro';
 
 const posts = getPosts().slice(0, 3);
 ---
@@ -50,23 +51,21 @@ const posts = getPosts().slice(0, 3);
     <p><a href="/projects/">All projects →</a></p>
   </section>
 
-  {
-    posts.length > 0 && (
-      <section>
-        <h2>Writing</h2>
-        <ul class="posts">
-          {posts.map((post) => (
-            <li>
-              <a href={post.url}>{post.title}</a>
-              <time class="muted" datetime={post.date.toISOString()}>
-                {post.dateLabel}
-              </time>
-            </li>
-          ))}
-        </ul>
-      </section>
-    )
-  }
+  <section>
+    <h2>Writing</h2>
+    <ul class="posts">
+      {
+        posts.map((post) => (
+          <li>
+            <PostLink post={post} />
+          </li>
+        ))
+      }
+    </ul>
+    <p>
+      <a href="/blog/">All writing →</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href={profile.links.linkedinArticles} target="_blank" rel="noopener">Articles on LinkedIn ↗</a>
+    </p>
+  </section>
 </Base>
 
 <style>
@@ -142,8 +141,5 @@ const posts = getPosts().slice(0, 3);
     gap: 0.25rem 1rem;
     padding: 0.6rem 0;
     border-bottom: 1px solid var(--border);
-  }
-  .posts time {
-    font-size: 0.9rem;
   }
 </style>

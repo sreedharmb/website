@@ -8,6 +8,7 @@ export const profile = {
   email: 'sreedhar.badrim@gmail.com',
   links: {
     linkedin: 'https://www.linkedin.com/in/sreedharmb/',
+    linkedinArticles: 'https://www.linkedin.com/in/sreedharmb/recent-activity/articles/',
     github: 'https://github.com/sreedharmb',
   },
   intro:
@@ -159,3 +160,24 @@ export const education = {
   period: '2008 – 2013',
   note: 'Internships at Trimble (iOS, GPS & indoor navigation) and CDAC Hyderabad (computer vision).',
 };
+
+// Articles published elsewhere (LinkedIn, Medium, ...). They appear in the
+// Writing list alongside local posts and link out to the original.
+// date format: YYYY-MM-DD
+export type ExternalArticle = {
+  title: string;
+  date: string;
+  url: string;
+  source: string;
+  description?: string;
+};
+
+export const externalArticles: ExternalArticle[] = [
+  // {
+  //   title: 'My article title',
+  //   date: '2025-06-01',
+  //   url: 'https://www.linkedin.com/pulse/...',
+  //   source: 'LinkedIn',
+  //   description: 'One-line summary.',
+  // },
+];
